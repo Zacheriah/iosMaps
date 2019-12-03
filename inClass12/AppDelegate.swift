@@ -3,22 +3,54 @@
 //  inClass12
 //
 //  Created by Wayman, Zacheriah on 4/17/19.
-//  Copyright © 2019 Wayman, Zacheriah. All rights reserved.
 //
 
 import UIKit
+import Firebase
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        print("hello")
+        FirebaseApp.configure()
+        
+        GMSServices.provideAPIKey("AIzaSyAzEZJRhVvKAgGhvp4AKhloGATXpXhVrGY")
+        if Auth.auth().currentUser != nil {
+            AppDelegate.showMap()
+        }else{
+            AppDelegate.showLogin()
+        }
         return true
     }
-
+    
+    static func showLogin(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LogInVC")
+        appDelegate.window?.rootViewController = vc
+        appDelegate.window?.makeKeyAndVisible()
+    }
+    
+    static func showSignUp(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
+        appDelegate.window?.rootViewController = vc
+        appDelegate.window?.makeKeyAndVisible()
+    }
+    
+    static func showMap(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "MapVC")
+        appDelegate.window?.rootViewController = vc
+        appDelegate.window?.makeKeyAndVisible()
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
